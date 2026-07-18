@@ -1,7 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using PlatformService.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // 1. THIS REPLACES Startup.ConfigureServices
+
+builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMemory"));
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
