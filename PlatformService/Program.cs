@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // 1. THIS REPLACES Startup.ConfigureServices
 
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMemory"));
+builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
+
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
@@ -22,5 +24,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
+PrepDb.PrepPopulation(app);
 
 app.Run();
