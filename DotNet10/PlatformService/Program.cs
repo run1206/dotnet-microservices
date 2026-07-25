@@ -1,5 +1,8 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PlatformService.Data;
+using PlatformService.Dtos;
+using PlatformService.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMemory"));
 builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
+
 
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(cfg => cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies()));
@@ -25,6 +29,35 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
+app.MapGet("/api/platforms",
+    (IPlatformRepo repository, IMapper mapper) =>
+    {
+        var platforms = repository.GetAllPlatforms();
+        return Results.Ok(mapper.Map<IEnumerable<PlatformReadDto>>(platforms));
+    });
+
+app.MapGet("/api/platforms/{id}",
+    (int id, IPlatformRepo repository, IMapper mapper) =>
+    {
+        var platform = repository.GetPlatformById(id);
+        return platform is null
+            ? Results.NotFound()
+            : Results.Ok(mapper.Map<PlatformReadDto>(platform));
+    })
+    .WithName("GetPlatformById");
+
+app.MapPost("/api/platforms",
+    (PlatformCreateDto createDto, IPlatformRepo repository, IMapper mapper) =>
+    {
+        var model = mapper.Map<Platform>(createDto);
+        repository.CreatePlatform(model);
+        repository.SaveChanges();
+
+        var platformReadDto = mapper.Map<PlatformReadDto>(model);
+        return Results.CreatedAtRoute("GetPlatformById",
+            new { id = platformReadDto.Id }, platformReadDto);
+    });
 
 PrepDb.PrepPopulation(app);
 
