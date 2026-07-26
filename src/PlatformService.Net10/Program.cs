@@ -1,6 +1,5 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using PlatformService.Net10.Data;
 using PlatformService.Net10.Dtos;
 using PlatformService.Net10.Models;
@@ -63,5 +62,3 @@ app.MapPost("/api/platforms",
 PrepDb.PrepPopulation(app);
 
 app.Run();
-
-public partial class Program { }

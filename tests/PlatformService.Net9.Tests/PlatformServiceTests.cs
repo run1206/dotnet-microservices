@@ -3,15 +3,20 @@ using System.Net.Http.Json;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
-using PlatformService.Net10.Data;
-using PlatformService.Net10.Dtos;
-using PlatformService.Net10.Models;
+using PlatformService.Net9.Data;
+using PlatformService.Net9.Dtos;
+using PlatformService.Net9.Models;
 
-namespace PlatformService.Net10.Tests;
+namespace PlatformService.Net9.Tests;
 
-public class PlatformServiceTests(WebApplicationFactory<Program> factory) : IClassFixture<WebApplicationFactory<Program>>
+public class PlatformServiceTests : IClassFixture<WebApplicationFactory<Program>>
 {
-    private readonly WebApplicationFactory<Program> _factory = factory;
+    private readonly WebApplicationFactory<Program> _factory;
+
+    public PlatformServiceTests(WebApplicationFactory<Program> factory)
+    {
+        _factory = factory;
+    }
 
     [Fact]
     public async Task GetAllPlatforms_ReturnsSeededPlatforms()
