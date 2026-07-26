@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/PlatformService.Net10/PlatformService.Net10.csproj" />
+    <Project Path="src/PlatformService.Net9/PlatformService.Net9.csproj" />
+  </Folder>
+</Solution>
