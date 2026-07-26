@@ -1,0 +1,6 @@
+@PlatformService.Net10_HostAddress = http://localhost:5250
+
+GET {{PlatformService.Net10_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
