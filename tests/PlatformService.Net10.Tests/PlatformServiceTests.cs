@@ -5,14 +5,9 @@ using PlatformService.Net10.Dtos;
 
 namespace PlatformService.Net10.Tests;
 
-public class PlatformServiceTests : IClassFixture<WebApplicationFactory<Program>>
+public class PlatformServiceTests(WebApplicationFactory<Program> factory) : IClassFixture<WebApplicationFactory<Program>>
 {
-    private readonly WebApplicationFactory<Program> _factory;
-
-    public PlatformServiceTests(WebApplicationFactory<Program> factory)
-    {
-        _factory = factory;
-    }
+    private readonly WebApplicationFactory<Program> _factory = factory;
 
     [Fact]
     public async Task GetAllPlatforms_ReturnsSeededPlatforms()
