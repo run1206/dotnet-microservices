@@ -1,40 +1,43 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using PlatformService.Net9.Data;
-using PlatformService.Net9.Dtos;
-using PlatformService.Net9.Models;
+using PlatformService.Net8.Data;
+using PlatformService.Net8.Dtos;
+using PlatformService.Net8.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 // 1. THIS REPLACES Startup.ConfigureServices
 
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMemory"));
 builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
 
-builder.Services.AddControllers();
 builder.Services.AddAutoMapper(cfg => cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies()));
-builder.Services.AddOpenApi();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 // 2. THIS REPLACES Startup.Configure
+
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
-
-app.MapControllers();
 
 app.MapGet("/api/platforms",
     (IPlatformRepo repository, IMapper mapper) =>
     {
         var platforms = repository.GetAllPlatforms();
         return Results.Ok(mapper.Map<IEnumerable<PlatformReadDto>>(platforms));
-    });
+    })
+    .WithOpenApi();
 
 app.MapGet("/api/platforms/{id}",
     (int id, IPlatformRepo repository, IMapper mapper) =>
@@ -44,7 +47,8 @@ app.MapGet("/api/platforms/{id}",
             ? Results.NotFound()
             : Results.Ok(mapper.Map<PlatformReadDto>(platform));
     })
-    .WithName("GetPlatformById");
+    .WithName("GetPlatformById")
+    .WithOpenApi();
 
 app.MapPost("/api/platforms",
     (PlatformCreateDto createDto, IPlatformRepo repository, IMapper mapper) =>
@@ -56,10 +60,9 @@ app.MapPost("/api/platforms",
         var platformReadDto = mapper.Map<PlatformReadDto>(model);
         return Results.CreatedAtRoute("GetPlatformById",
             new { id = platformReadDto.Id }, platformReadDto);
-    });
+    })
+    .WithOpenApi();
 
 PrepDb.PrepPopulation(app);
 
 app.Run();
-
-public partial class Program { }
