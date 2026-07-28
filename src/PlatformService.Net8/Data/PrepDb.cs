@@ -1,6 +1,6 @@
-using PlatformService.Net9.Models;
+using PlatformService.Net8.Models;
 
-namespace PlatformService.Net9.Data;
+namespace PlatformService.Net8.Data;
 
 public static class PrepDb
 {
