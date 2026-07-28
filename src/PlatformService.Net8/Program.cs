@@ -66,3 +66,5 @@ app.MapPost("/api/platforms",
 PrepDb.PrepPopulation(app);
 
 app.Run();
+
+public partial class Program { }
