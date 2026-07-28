@@ -6,6 +6,7 @@
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/PlatformService.Net10.Tests/PlatformService.Net10.Tests.csproj" />
+    <Project Path="tests/PlatformService.Net8.Tests/PlatformService.Net8.Tests.csproj" />
     <Project Path="tests/PlatformService.Net9.Tests/PlatformService.Net9.Tests.csproj" />
   </Folder>
 </Solution>
