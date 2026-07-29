@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="Code Coverage" uri="datacollector://Microsoft/CodeCoverage/2.0">
+        <Configuration>
+          <CodeCoverage>
+            <!-- 1. Exclude the OpenApi binary module from coverage completely -->
+            <ModulePaths>
+              <Exclude>
+                <ModulePath>.*[Mm]icrosoft\.[Aa]sp[Nn]et[Cc]ore\.[Oo]pen[Aa]pi.*</ModulePath>
+              </Exclude>
+            </ModulePaths>
+
+            <!-- 2. Ignore compiler-generated code via attributes inside your source code -->
+            <Attributes>
+              <Exclude>
+                <Attribute>^System\.Runtime\.CompilerServices\.CompilerGeneratedAttribute$</Attribute>
+                <Attribute>^System\.CodeDom\.Compiler\.GeneratedCodeAttribute$</Attribute>
+              </Exclude>
+            </Attributes>
+
+            <!-- 3. Prevent lookups from indexing file paths originating inside any obj folder -->
+            <Functions>
+              <Exclude>
+                <Function>.*\.obj\..*</Function>
+              </Exclude>
+            </Functions>
+          </CodeCoverage>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

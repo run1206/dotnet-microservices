@@ -1,3 +1,4 @@
 {
-    "files.autoSave": "afterDelay"
+    "files.autoSave": "afterDelay",
+    "dotnet.unitTests.runSettingsPath": "${workspaceFolder}/.runsettings"
 }
