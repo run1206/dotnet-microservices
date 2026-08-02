@@ -62,5 +62,4 @@ app.MapPost("/api/platforms",
     });
 
 PrepDb.PrepPopulation(app);
-
 app.Run();
