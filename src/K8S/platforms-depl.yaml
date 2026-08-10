@@ -15,3 +15,8 @@ spec:
       containers:
         - name: platformservice
           image: xcrun1206/platformservice:latest
+          ports:
+            - containerPort: 8081
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://+:8081
