@@ -21,14 +21,10 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 // 2. THIS REPLACES Startup.Configure
 if (app.Environment.IsDevelopment())
-{
     app.MapOpenApi();
-}
 
 if (!app.Environment.IsDevelopment())
-{
     app.UseHttpsRedirection();
-}
 
 app.MapControllers();
 
