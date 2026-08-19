@@ -29,8 +29,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-if (!app.Environment.IsDevelopment())
-    app.UseHttpsRedirection();
+// if (!app.Environment.IsDevelopment())
+//     app.UseHttpsRedirection();
 
 app.MapGet("/api/platforms",
     (IPlatformRepo repository, IMapper mapper) =>
